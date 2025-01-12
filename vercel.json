@@ -1,0 +1,16 @@
+{
+    "builds": [
+        {
+            "src": "Alps/wsgi.py",
+            "use": "@vercel/pyhton",
+            "config": { "maxLambdaSize": "300mb" ,"runtime": "python3.11" }
+            
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "Alps/wsgi.py"
+        }
+    ]
+}
