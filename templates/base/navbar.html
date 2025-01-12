@@ -1,0 +1,217 @@
+{% load static %}
+
+
+<nav id="navbar"  class="navbar navbar-expand-lg  fixed-top ">
+<div class="d-flex justify-content-start d-lg-none justify-content-sm-start py-0 -mct" >
+     <button class="navbar-toggler shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
+    <span class="navbar-toggler-icon"></span>
+</button>
+</div>
+
+<div class="d-flex justify-content-center d-lg-none justify-content-sm-center logo-sm -m ">
+    <img src="{% static 'img/Alps_text.png' %}" alt="" srcset="">
+    </div>
+ {% if user.is_authenticated %}
+<div class="d-flex justify-content-end d-lg-none justify-content-sm-end  -mct">
+    <a href="{% url 'wishlist' %}" class=" ">
+        <div class="position-relative d-flex align-items-center fav-i-l  ">
+            <!-- Cart Icon -->
+          <span class=""><i class="bi bi-heart "></i></span>
+            <!-- Cart Count -->
+            <span class=" cart_count position-absolute top-0 start-100 translate-middle">
+                {{wishlist_count }}
+            </span>
+        </div>
+        <!-- Cart Text -->
+        
+    </a>
+    
+</div>
+{% else %}
+<a href="{% url 'login' %}" class="nav-item nav-link  d-lg-none ">
+    <div class="login text-center -l">
+        <!-- Icon as background image -->
+        <span class="icon" aria-hidden="true"></span>
+        
+    </div>
+</a>
+
+ {% endif %}
+      
+    
+<div class="col d-lg-none -mns"> 
+    <form class="d-flex psr-l" role="search" action="/search/" method="GET">
+        {% csrf_token  %}
+        <div class="input-group">
+            <input id="nav-search-m" class="form-control search-nav-s"type="search" name="q" placeholder="Search products" aria-label="Search" oninput="searchProducts()">
+            <button class="input-group-text border-1 sr-btn" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+            <div id="search-suggestions" class="search-suggestions-sm" style="display: none;">
+                <!-- Suggestions will be displayed here -->
+        </div>
+    </form>
+    
+    </div>
+</div>
+
+
+
+    
+
+   
+
+    <!-- Navbar Links and Search Bar for larger screens -->
+
+
+
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        
+        <a  href="{% url 'home' %}" class="collapse navbar-collapse"><img class=" logo " src="{% static 'img/Alps_text.png' %}" alt="Site Logo"></a>
+
+        <!-- Search Bar -->
+         <div class="input-group">
+        <form class="d-flex ms-auto me-3 p-sr" role="search" action="/search/" method="GET">
+            {% csrf_token  %}
+            <div class="input-group">
+                <input id="nav-search-m" class="form-control search-nav-l"type="search" name="q" placeholder="Search products" aria-label="Search" oninput="searchProducts()">
+                <button class="input-group-text border-1 sr-btn" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div  class="search-suggestions-lg" style="display: none;"></div>
+                                   </div>
+        </form>
+    </div>
+        <div class="navbar-nav">
+            <a href="{% url 'home' %}" class="nav-item nav-link  mt-3">Home</a>
+            <a href="about.html" class="nav-item nav-link mt-3 ">About</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle  mt-3" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <!-- Static links for Featured and Best Selling -->
+                    <li><a class="dropdown-item" href="{% url 'view-products' category_slug='offer-products' %}">Featured Products</a></li>
+                    <li><a class="dropdown-item" href="{% url 'view-products' category_slug='combo' %}">Best Selling Products</a></li>
+                    
+                    <!-- Dynamic links for other categories -->
+                    {% for category in global_categories %}
+                  
+                        <li>
+                            <a class="dropdown-item" href="{% url 'view-products' category_slug=category.slug %}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                {% endfor %}
+                </ul>
+            </div>
+            
+            {% if user.is_authenticated %}
+                <div class="nav-item dropdown">
+                    <a href="{% url 'profile'%}" class="nav-link dropdown-toggle mt-3" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div>
+                            <span class="">{{ user.first_name }}</span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                        <li><a  class="dropdown-item" href="{% url 'wishlist' %}">Wishlist</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt text-danger"></i> Sign Out</a></li>
+                    </ul>
+                </div>
+                <a href="{% url 'wishlist' %}" class="nav-item nav-link ">
+                    <div class="position-relative d-flex align-items-center fav-i-l  ">
+                        <!-- Cart Icon -->
+                      <span class=""><i class="bi bi-heart"></i></span>
+                        <!-- Cart Count -->
+                        <span class=" cart_count position-absolute top-0 start-100 translate-middle">
+                            {{wishlist_count }}
+                        </span>
+                    </div>
+                    <!-- Cart Text -->
+                    
+                </a>
+                
+            {% else %}
+            <a href="{% url 'login' %}" class="nav-item nav-link">
+                <div class="login-l">
+                    <span class="icon-l" aria-hidden="true"></span>
+                    <span class="text-l">Login</span>
+                </div>
+            </a>
+            
+            
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+ 
+<!-- Offcanvas Menu -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title fw-bold" id="offcanvasMenuLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Main Navigation Links -->
+        <a href="{% url 'home' %}" class="d-block mb-3  " style="color: #054811;  text-transform: uppercase;">Home</a>
+    
+        <a href="about.html" class="d-block mb-3    " style="color: #054811;  text-transform: uppercase;">About</a>
+        <hr>
+
+        <!-- Product Categories -->
+        <p class=" text-uppercase mb-2 ">Products</p>
+        <ul class="list-unstyled mb-4">
+            <!-- Static links for Featured and Best Selling  -->
+            <li class="mb-2">
+                <a href="{% url 'view-products' category_slug='featured_products' %}" class="">
+                    <i class="bi bi-circle"></i><span>Featured Products</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{% url 'view-products' category_slug='best_selling' %}" class="">
+                    <i class="bi bi-circle"></i>Best Selling  Products
+                </a>
+            </li>
+        
+            <!-- Dynamic links for other categories -->
+            {% for category in global_categories %}
+           
+                <li>
+                    <a class="dropdown-item" href="{% url 'view-products' category_slug=category.slug %}">
+                        <i class="bi bi-circle"></i>  {{ category.name }}
+                    </a>
+                </li>
+            
+        {% endfor %}
+            
+        </ul>
+        
+        <hr>
+
+        <!-- User Profile Links -->
+        {% if user.is_authenticated %}
+        <p class="fw-bold text-uppercase mb-2">Welcome, {{ user.first_name }}</p>
+        <ul class="list-unstyled mb-4">
+            <li class="mb-2">
+                <a href="{% url 'profile' %}" class="text-muted fw-bold">My Profile</a>
+            </li>
+            <li class="mb-2">
+                <a href="{% url 'wishlist' %}" class="text-muted fw-bold">Wishlist</a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}" class="text-danger fw-bold">Sign Out</a>
+            </li>
+        </ul>
+        {% else %}
+        <a href="{% url 'login' %}" class="nav-item nav-link">
+            <div class="login-t">
+                <span class="icon-t" aria-hidden="true"></span>
+                <span class="text-t">Login</span>
+            </div>
+        </a>
+        {% endif %}
+    </div>
+</div>

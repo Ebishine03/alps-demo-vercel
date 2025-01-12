@@ -1,0 +1,271 @@
+{% extends 'base/index.html' %}
+{% load custom_filters %}
+
+{% load static %}
+
+{% block content %}
+
+{% include 'base/carousel.html' %}
+<!-- About Start -->
+<div class="container-xxl about-section py-5">
+    <div class="row align-items-center">
+        <!-- Image Grid -->
+        <div class="col-md-6">
+            <div class="row image-grid">
+                <div class="col-6 mb-3">
+                    <img src="{% static 'img/a4.jpg' %}" class="img-fluid" alt="Image 4"  style="width: 400px;height: 300px";>
+                    
+                </div>
+                <div class="col-6  mt-5">
+                    <img src="{% static 'img/a2.png' %}" class="img-fluid" alt="Image 2" style="width: 350px;height: 200px;">
+                </div>
+                <div class="col-6 mb-3 mt-2">
+                    <img src="{% static 'img/a3.jpg' %}" class="img-fluid" alt="Image 3"  style="width: 350px;height: 200px;">
+                </div>
+                <div class="col-6 mb-3">
+                    <img src="{% static 'img/a1.jpg' %}" class="img-fluid" alt="Image 1" style="width: 400px;height: 300px;">                </div>
+            </div>
+        </div>
+
+        <!-- Text Content -->
+        <div class="col-md-6">
+            <h4 class="about-heading mb-4">About Us</h4>
+            <h3 class="mb-4 underlined-heading mt-2 ">Alps Green Mart</h3>
+            <p class="about-text text-muted mb-4" style="font-size: 1.1rem; line-height: 1.7;">
+                At **Alps Green Mart**, we bring nature's finest treasures right to your doorstep. Specializing in premium spices, herbs, and teas, we pride ourselves on offering products that embody the purity, flavor, and essence of nature.
+                <br><br>
+                
+                <strong>Why Choose Us?</strong>
+                <ul>
+                    <li><strong>Authentic Quality:</strong> Every product is carefully selected, ensuring unmatched freshness and taste.</li>
+                    <li><strong>Sustainable Practices:</strong> We work with eco-conscious growers who share our commitment to sustainability and ethical sourcing.</li>
+                    <li><strong>Worldwide Shipping:</strong> Wherever you are, we ensure that our products reach you with the same care and quality as they leave our facilities.</li>
+                    <li><strong>Customer-Centric Service:</strong> Your satisfaction is our priority, and we go above and beyond to exceed your expectations.</li>
+                </ul>
+                <br>
+                <strong>Our Vision</strong>
+                <p>
+                    We aim to make Alps Green Mart a household name synonymous with trust, quality, and authenticity. As we grow, we remain steadfast in our mission to promote health, wellness, and flavorful experiences through our products.
+                </p>
+                <br>
+                <strong>Join the Alps Green Mart Family</strong>
+                <p>
+                    Discover the joy of nature’s finest products with worldwide delivery and a legacy of excellence. Whether you're a tea enthusiast, a culinary artist, or simply someone who values high-quality ingredients, Alps Green Mart has something special for you.
+                </p>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- About End -->
+
+<!-- Article Start -->
+<div class="container-xxl py-5" data-aos="fade-up">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-5">
+                <img class="img-fluid" src="{% static 'img/article.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-6" >
+                <div class="section-title">
+                    <h1 class="display-6">Premium Tea Leaves</h1>
+                </div>
+                <h3 class="mb-4">
+                    Our premium tea collection offers the finest blends from renowned tea gardens worldwide. Handpicked leaves ensure exceptional freshness and flavor, whether it's bold black tea, soothing green tea, or delicate herbal blends. Crafted with care and sustainable practices, every sip promises a luxurious, high-quality tea experience.                </h3>
+          
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container-xxl py-5 px-5 c1-section" data-aos="fade-up" data-aos-duration="2500">
+        <div class="row align-items-center">
+            <!-- Text Section -->
+            <div class="col-md-6" data-aos="fade-right"
+                data-aos-offset="320"
+                data-aos-easing="ease-in-sine">
+                <h1 class="display-5 fw-bold">PREMIUM <br> SPICE AND HERBS</h1>
+                <p class="text-muted" style="font-family: 'Roboto', sans-serif; font-size: 1.1rem; line-height: 1.8;">
+                    Step into the world of pure indulgence with our premium spices and herbs, harvested from the misty hills of Idukki, Kerala. A land where nature’s bounty thrives, offering an unparalleled aroma and flavor in every pinch.
+                </p>
+                <p class="text-muted" style="font-family: 'Roboto', sans-serif; font-size: 1.1rem; line-height: 1.8;">
+                    From the bold, peppery heat of black pepper to the sweet, floral notes of cardamom, every spice in our collection tells a story of authenticity and passion. Handpicked by expert farmers, our spices bring the heart of Kerala's rich culinary heritage straight to your kitchen.
+                </p>
+                <!-- View Gallery Button -->
+                <a href="/gallery" class="btn btn-success mt-3 rounded-pill py-3 px-5" style="font-family: 'Roboto', sans-serif; font-size: 1rem;">View Gallery</a>
+            </div>
+    
+            <!-- Image Section with Carousel -->
+            <div class="col-md-6 text-center c1-image" 
+                data-aos="fade-up">
+                <div id="spiceCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Carousel Indicators -->
+                    
+                    <!-- Carousel Images -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active ms-5">
+                            <img src="{% static 'img/tea-cup-with-mint-cinnamon-dried-herbs-lime-grungy-blue-surface-top-view.png' %}" class="d-block w-100" alt="Spices Slide 1">
+
+                        </div>
+                        
+                        <div class="carousel-item ">
+                            <img src="{% static 'img/modern-helathy-ingredients-composition.png' %}" class="d-block w-100" alt="Spices Slide 2">
+
+                        </div>
+                        <div class="carousel-item ">
+                            <img src="{% static 'img/top-view-various-indian-spices-seasonings-table.png' %}" class="d-block w-100" alt="Spices Slide 3">
+                        </div>
+                    </div>
+    
+                    <!-- Carousel Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#spiceCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#spiceCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<!-- Article End -->
+
+ 
+<!-- Special Offers Section -->
+
+
+<!-- Categories Section -->
+
+
+
+{% for category, products in categorized_products.items %}
+<div class="py-5">
+    <div class="container">
+        <div class="section-title text-center mx-auto" style="max-width: 500px;">
+            <h1 class="fw-bold text-muted" style="font-family: 'Roboto', sans-serif; font-size: 1.8rem;">
+                {{ category.name }}
+            </h1>
+        </div>
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-6 col-lg-4 col-md-6 mb-4 mt-2">
+                <div class="store-item card shadow-lg bg-light rounded h-70 text-center">
+                    <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
+                        
+                        <!-- Product Image -->
+                        <div class="image-container position-relative">
+                            {% if product.product_image %}
+                                <img class="img-fluid" src="{{ product.product_image }}" alt="{{ item.product.title }}">
+                            {% else %}
+                                <img src="" alt="No Image Available">                 
+                            {% endif %}
+                        
+                            {% if  product.is_best_selling and product.is_featured %}
+                            <div class="d-flex position-absolute top-0 start-0">
+                                <div class="discount-badge bg-danger text-white px-2 py-1 small me-1">
+                                    Featured
+                                </div>
+                                <div class="discount-badge bg-success text-white px-2 py-1 small">
+                                    Best Selling
+                                </div>
+                            </div>
+                            {% elif product.is_best_selling %}
+                            <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                                Best Selling
+                            </div>
+                            {% elif product.is_featured  %}
+                           
+                            <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                            Featured
+                            </div>
+                            {% endif %}
+                        </div>
+        
+                        <!-- Product Details -->
+                        <div class="p-1">
+                            <!-- Product Title -->
+                            <h6 class="mb-1 " style="font-family: 'Roboto', sans-serif; font-weight: 500;">
+                                {{ product.title }}
+                            </h6>
+                            <p class="m-price text-muted" style="font-family: 'Roboto', sans-serif; font-weight: 500;">{{ product.weight|format_weight }}</p>
+        
+                           
+        
+                            <!-- Price Display -->
+                            <div class="price-section">
+                              
+                               
+                                    <div class="d-flex justify-content-center">
+                                        
+                                        
+                                        <p class=" mb-0" style="font-family: 'Roboto', sans-serif; font-weight: 500;">
+                                            <i class="bi bi-currency-rupee"></i>{{ product.price|floatformat:2 }}
+                                        </p>
+                                       
+                                    </div>
+                              
+                            </div>
+        
+                            <!-- Star Rating -->
+                            <div class="rating">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= item.product.average_rating %}
+                                        <i class="fas fa-star text-warning"></i>
+                                    {% else %}
+                                        <i class="far fa-star text-muted"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </a>
+        
+                    <!-- Button Container: Add to Cart & Buy Now -->
+                     {% if product.is_amazon  %}
+                    <div class="">
+                        <!-- Add to Cart Button -->
+                        <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2">
+                            {% csrf_token %}
+                            <button type="submit" class="button-cart-m" role="button">Add to Wishlist</button>
+                        </form>
+        
+                        <!-- Buy Now Button -->
+                        <form method="POST" action="{% url 'add_to_wishlist' product.id %}" class="mb-2">
+                            {% csrf_token %}
+                            <button type="submit" class="button-cart-m" role="button">Shop via Amazon Now</button>
+                        </form>
+                        <!-- You can add the Buy Now button here if required -->
+                    </div>
+                    {% else %}
+                    <div class="">
+                        <!-- Add to Cart Button -->
+                        <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2">
+                            {% csrf_token %}
+                            <button type="submit" class="button-cart-m" role="button">Add To Wishlist </button>
+                        </form>
+        <h6 class="text-muted">Available Soon</h6>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'view-products' category.slug %}" class="btn btn-primary rounded-pill py-3 px-5">
+                View More <i class="fa fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+
+{% endblock %}

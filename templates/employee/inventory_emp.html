@@ -1,0 +1,765 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - Employee</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Option 1: Include in HTML -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+    <!-- Vendor CSS Files -->
+    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.css" integrity="sha512-6p+GTq7fjTHD/sdFPWHaFoALKeWOU9f9MPBoPnvJEWBkGS4PKVVbCpMps6IXnTiXghFbxlgDE8QRHc3MU91lJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/style.css' %} "rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="{% url 'employee_dashboard' %}" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Tea Wallet</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        {% csrf_token  %}
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+   
+      {% include 'base/notification.html' %}
+        
+      <!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            {% if request.user.employee_profile.image %}
+    <img src="{{ request.user.employee_profile.image.url }}" class="rounded-circle" alt="{{ request.user.get_full_name }}" width="50" height="50">
+{% else %}
+    <img src="/static/images/default_profile.png" class="rounded-circle" alt="Default Profile Image" width="50" height="50"> 
+{% endif %}
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.first_name }} {{user.last_name }}</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{ user.first_name}}{{ user.last_name}}</h6>
+              <span>{{ user.role}}</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'employee_profile' %}">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <!-- Existing Dashboard Nav -->
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'employee_dashboard' %}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboards</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <!-- Products Section -->
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Products</span>
+      </a>
+      <ul class="nav-content" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'add_category' %}">
+            <i class="bi bi-circle"></i><span>Add Category</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'add_product' %}">
+            <i class="bi bi-circle"></i><span>Add Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'all_products' %}">
+            <i class="bi bi-circle"></i><span>All Products</span>
+          </a>
+        </li>
+        <!-- Additional Product-related Links -->
+        <!-- ... -->
+      </ul>
+    </li><!-- End Products Section -->
+
+    <!-- Orders Section -->
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="bi bi-basket"></i><span>Orders</span>
+      </a>
+      <ul class="nav-content" data-bs-parent="#sidebar-nav">
+        
+        <li>
+          <a href="{% url 'all_orders' %}">
+            <i class="bi bi-circle"></i><span>All Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-circle"></i><span>Pending Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-circle"></i><span>Completed Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-circle"></i><span>Order History</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Orders Section -->
+
+    <!-- Pages Section -->
+    <li class="nav-heading">Pages</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="users-profile.html">
+        <i class="bi bi-person"></i><span>Profile</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-blank.html">
+        <i class="bi bi-file-earmark"></i><span>Blank</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+<!-- End Sidebar-->
+{% block  content %}
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-8">
+        <div class="row">
+
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Sales <span>| Today</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>145</h6>
+                    <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <!-- Revenue Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Return <span>| This Month</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>$3,264</h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div><!-- End Revenue Card -->
+
+<!-- Stock Exhausted Card -->
+<div class="col-xxl-4 col-md-6">
+  <div class="card info-card revenue-card">
+
+      <div class="filter">
+          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+          </ul>
+      </div>
+
+      <div class="card-body">
+          <h5 class="card-title">Out of Stock <span>| This Month</span></h5>
+
+         
+
+          <div class="out-of-stock-warning mt-3 text-danger">
+              <h6>Out of Stock Products</h6>
+              {% if out_of_stock_products %}
+                  <ul class="list-unstyled">
+                      {% for product in out_of_stock_products %}
+                          <li>
+                              {{ product.title }} - Stock: {{ product.stock }}
+                          </li>
+                      {% endfor %}
+                  </ul>
+              {% else %}
+                  <p>No out of stock products.</p>
+              {% endif %}
+              <span class="text-muted small">Products with stock equal to 0</span>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- End  Exhausted Stock Card -->
+
+
+<!-- Stock warning Card -->
+<div class="col-xxl-4 col-md-6">
+  <div class="card info-card revenue-card">
+
+      <div class="filter">
+          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">Today</a></li>
+              <li><a class="dropdown-item" href="#">This Month</a></li>
+              <li><a class="dropdown-item" href="#">This Year</a></li>
+          </ul>
+      </div>
+
+      <div class="card-body">
+          <h5 class="card-title">Stock Warning <span>| This Month</span></h5>
+
+          
+
+          <div class="low-stock-warning mt-3">
+              
+              {% if low_stock_products %}
+                  <ul class="list-unstyled">
+                      {% for product in low_stock_products %}
+                          <li>
+                           
+                            <h5 class="card-title text-danger"> {{ product.title }} - Stock: {{ product.stock }}</h5>
+
+                          </li>
+                      {% endfor %}
+                  </ul>
+              {% else %}
+                  <p>No low stock products.</p>
+              {% endif %}
+              <span class="text-muted small">Products with stock less than 10</span>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- stock Warning Card -->
+
+<!-- Customers Card -->
+   <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Customers <span>| This Year</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>1244</h6>
+                    <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card">
+
+          <div class="card-body">
+            <h5 class="card-title">Recently Added </h5>
+
+            <div class="activity">
+              <div class="activity-item d-flex">
+                <div class="activite-label">2 Hours Ago</div>
+                <i class="bi bi-check-circle-fill activity-badge text-success align-self-start"></i>
+                <div class="activity-content">
+                  Added a new product: <a href="#" class="fw-bold text-dark">Product Name</a>
+                </div>
+              </div><!-- End activity item -->
+
+              <div class="activity-item d-flex">
+                <div class="activite-label">1 Day Ago</div>
+                <i class="bi bi-check-circle-fill activity-badge text-success align-self-start"></i>
+                <div class="activity-content">
+                  Updated inventory for: <a href="#" class="fw-bold text-dark">Product Name</a>
+                </div>
+              </div><!-- End activity item -->
+
+              <div class="activity-item d-flex">
+                <div class="activite-label">2 Days Ago</div>
+                <i class="bi bi-check-circle-fill activity-badge text-success align-self-start"></i>
+                <div class="activity-content">
+                  New order received: <a href="#" class="fw-bold text-dark">Order #12345</a>
+                </div>
+              </div><!-- End activity item -->
+
+              <div class="activity-item d-flex">
+                <div class="activite-label">3 Days Ago</div>
+                <i class="bi bi-check-circle-fill activity-badge text-success align-self-start"></i>
+                <div class="activity-content">
+                  Customer feedback received: <a href="#" class="fw-bold text-dark">"Great service!"</a>
+                </div>
+              </div><!-- End activity item -->
+            </div>
+
+          </div>
+        </div>
+      </div><!-- End Right side columns -->
+
+    </div>
+
+
+
+  <div class="container mt-5">
+    <!-- Order Statistics -->
+    <div class="row">
+      
+        <div class="col-md-3">
+            <div class="card text-center mb-4">
+                <div class="card-header bg-secondary text-white">
+                    Total Orders
+                </div>
+                <div class="card-body">
+                    <h3>{{ total_orders }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card text-center mb-4">
+              <div class="card-header bg-secondary text-white">
+                  Today's Orders
+              </div>
+              <div class="card-body">
+                  <h3>{{  today_orders_count }}</h3>
+              </div>
+          </div>
+      </div>
+
+
+        <!-------Pending Orders -->
+        <div class="col-md-3">
+          <div class="card text-center mb-4">
+              <div class="card-header bg-secondary text-white">
+                  Pending Orders
+              </div>
+              <div class="card-body">
+                  <h3>{{  pending_orders_count}}</h3>
+              </div>
+          </div>
+      </div>
+
+       <!-- Processed Orders -->
+      <div class="col-md-3">
+        <div class="card text-center mb-4">
+            <div class="card-header bg-secondary text-white">
+                Processed Orders
+            </div>
+            <div class="card-body">
+                <h3>{{  processed_orders_count }}</h3>
+            </div>
+        </div>
+    </div>
+       
+        
+        <!-- Shipped Orders -->
+        <div class="col-md-3">
+            <div class="card text-center mb-4">
+                <div class="card-header bg-secondary text-white">
+                    Shipped Orders
+                </div>
+                <div class="card-body">
+                    <h3>{{ shipped_orders_count }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canceled Orders -->
+        <div class="col-md-3">
+            <div class="card text-center mb-4">
+                <div class="card-header bg-danger text-white">
+                    Canceled Orders
+                </div>
+                <div class="card-body">
+                    <h3>{{ canceled_orders_count }}</h3>
+                </div>
+            </div>
+        </div>
+
+       
+      <div class="col-md-3">
+        <div class="card text-center mb-4">
+            <div class="card-header bg-success text-white">
+                Delivered Orders
+            </div>
+            <div class="card-body">
+                <h3>{{ delivered_orders_count }}</h3>
+            </div>
+        </div>
+    </div>
+    </div>
+    <section class="recent-orders">
+      <div class="card mt-5">
+          <div class="card-header">
+              <h4>Recent Orders</h4>
+          </div>
+          <div class="card-body">
+            <div class="row mb-4">
+              <div class="col-md-10 mt-2">
+                <div class="input-group">
+                    <input type="text" id="order_search_query" name="order_search_query" class="form-control"
+                           placeholder="Search in All Orders" value="{{ request.GET.order_search_query }}">
+                </div>
+              </div>
+            </div>
+            
+            <table class="table table-striped table-hover table-bordered"> <!-- Added table-bordered class -->
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Tracking Number</th>
+                        <th>Status</th>
+                        <th>Delivery Address</th>
+                        <th>Pin Code</th>
+                        <th>Order Date</th>
+                        <th>Ordered Items</th>
+                        <th>Shipping Charge</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody id='order-list'>
+                    {% if orders %}
+                        {% include 'partials/order_partial.html' %}
+                    {% else %}
+                        <tr>
+                          <td colspan="10" class="text-center">
+                              <p class="text-muted">No Orders found.</p>
+                          </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+             
+          </div>
+          <a href="{% url 'all_orders' %}" class="btn btn-primary">View All Orders</a>
+      </div>
+    </section>
+    
+</div>
+</main>
+
+
+<section class="products">
+  <div class="col-12">
+    <div class="card list_product overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title">Recent Products</h5>
+        <div class="row mb-4">
+          <!-- Search within Category -->
+          <div class="col-md-10 mt-2">
+              <div class="input-group">
+                  <input type="text" id="product_search_query" name="product_search_query" class="form-control"
+                         placeholder="Search in All Products" value="{{ request.GET.product_search_query }}">
+              </div>
+          </div>
+      </div>
+      
+      <table class="table table-bordered table-hover" id="product-table">
+        <thead class="thead-light">
+            <tr>
+                <th style="width: 8%;">Image</th>
+                <th style="width: 15%;">Title</th>
+                <th style="width: 12%;">Category</th>
+                <th style="width: 10%;">Price</th>
+                <th style="width: 20%;">Description</th>
+                <th style="width: 8%;">Is Offer</th>
+                <th style="width: 8%;">Stock</th>
+                <th style="width: 10%;">Updated At</th>
+                <th style="width: 10%;">Created By</th>
+                <th style="width: 10%;">Updated By</th>
+                <th style="width: 10%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="product-list">
+            {% if products %}
+                {% include 'partials/product_table_partial.html' %}
+            {% else %}
+                <tr>
+                    <td colspan="11" class="text-center">
+                        <p class="text-muted">No products found.</p>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+      </div>
+      <a href="{% url 'all_products' %}" class="btn btn-primary">View All Products</a>
+
+    </div>
+    
+  </div>
+</section>
+
+
+
+
+
+
+{% endblock %}
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Tea Wallet</span></strong>. All Rights Reserved
+    </div>
+    
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->
+  <script>
+   
+    const userId = "{{ request.user.id }}";
+</script>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  
+ 
+ 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <script src="{% static 'js/main.js' %} "></script>
+  <script src="{% static 'js/dashboard.js' %} "></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  {% block scripts %}<script src="{% static 'js/filter_dashboard.js' %}"></script>{% endblock %}
+ 
+
+</body>
+
+</html>

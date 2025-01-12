@@ -1,0 +1,11 @@
+<!-- templates/partials/search_suggestions.html -->
+
+<ul class="list-group">
+    {% for product in products %}
+        <li class="list-group-item">
+            <a href="{% url 'product_detail' product.slug %}">{{ product.title }}</a>
+        </li>
+    {% empty %}
+        <li class="list-group-item">No suggestions found.</li>
+    {% endfor %}
+</ul>

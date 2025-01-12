@@ -1,0 +1,35 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<h1>Checkout</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <h2>Shipping Address</h2>
+    {% if addresses %}
+        <select name="address_id">
+            {% for address in addresses %}
+                <option value="{{ address.id }}">{{ address }}</option>
+            {% endfor %}
+        </select>
+        <p>Or add a new address:</p>
+    {% endif %}
+    
+    {{ address_form.as_p }}
+    
+    <h2>Payment Method</h2>
+    {{ payment_form.as_p }}
+    
+    <h2>Order Summary</h2>
+    <ul>
+        {% for item in cart.items.all %}
+            <li>{{ item.product.title }} x {{ item.quantity }} - ${{ item.product.price }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Total: ${{ cart.total_price }}</h3>
+
+    <button type="submit">Place Order</button>
+</form>
+{% endblock %}

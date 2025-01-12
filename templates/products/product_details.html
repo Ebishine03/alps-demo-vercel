@@ -1,0 +1,259 @@
+{% extends 'base/index.html' %}
+
+{% load custom_filters %}
+
+{% block content %}
+<div class="container product-detail ">
+    <div class="row">
+        <!-- Product Information -->
+        <div class="col-sm-6">
+            <div class="position-relative">
+                <!-- Product Image -->
+                {% if product.product_image %}
+                    <img src="{{ product.product_image.url }}" alt="{{ product.title }}" class="img-fluid mb-3 product-dt-img" />
+                {% else %}
+                    <img src="https://via.placeholder.com/500" alt="Product Image" class="img-fluid mb-3" />
+                {% endif %}
+                
+
+               
+                    {% if  product.is_best_selling and product.is_featured %}
+                    <div class="d-flex position-absolute top-0 start-0">
+                        <div class="discount-badge bg-danger text-white px-2 py-1 small me-1">
+                            Featured
+                        </div>
+                        <div class="discount-badge bg-success text-white px-2 py-1 small">
+                            Best Selling
+                        </div>
+                    </div>
+                    {% elif product.is_best_selling %}
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                        Best Selling
+                    </div>
+                    {% elif product.is_featured  %}
+                   
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                    Featured
+                    </div>
+                    {% endif %}
+               
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <!-- Product Name -->
+            <h3 class="product-title" style="font-family: 'Roboto', sans-serif; font-weight: 500;">{{ product.title }}</h3>
+            
+            
+
+                <h5 class="text-muted p-d-l" style="font-family: 'Roboto', sans-serif; font-weight: 500;"> {{ product.weight|format_weight }}</h5>
+
+                <!-- Price Section -->
+                <div class="price-section-dt">
+                  {% if product.is_amazon  %}
+                  njhvd
+                  {% else %}
+                  
+                  <div class="">
+                            
+                    <!-- Original Price -->
+                    <h4 class=" mb-0 ms-2" style="font-family: 'Roboto', sans-serif; font-weight: 400;">
+                        <i class="bi bi-currency-rupee"></i>{{ product.static_price|floatformat:2 }}
+                    </h4>
+                </div>
+                  {% endif %}
+                     
+                  
+                        
+                </div>
+
+                <!-- Star Rating -->
+                <div class="rating mt-4">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= product.average_rating %}
+                            <i class="fas fa-star text-warning"></i>
+                        {% else %}
+                            <i class="far fa-star text-muted"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <!-- Add to Cart and Buy Now Buttons -->
+                 {% if product.is_amazon %}
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-dark ">Shop Now Via Amazon</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form method="POST" action="{% url 'add_to_wishlist' product.slug %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-dark ">Add To Wishlist</button>
+                        </form>
+                    </div>
+                    
+                    {% else %}
+                    <div class="row mt-3">
+                    <div class=" ">
+                       <h4 class="text-danger mt-3">Available Soon</h4>
+                    </div>
+                    <div class="">
+                        <form method="POST" action="{% url 'add_to_wishlist' product.slug %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-outline-dark mt-2  ">Add To Wishlist </button>
+                        </form>
+                    </div>
+                </div>
+                </div>
+                {% endif  %}
+           
+
+            <!-- Expected Delivery -->
+            
+        </div>
+    </div>
+
+    <!-- Product Description -->
+    <div class="product-description-dt mt-4 ms-3" style="font-family: 'Roboto', sans-serif; font-weight: 500;">
+        <h5 class="product-description-heading" style="text-decoration: underline; text-decoration-color: #037101; text-decoration-thickness: 1px; text-underline-offset: 7px;">
+            Product Description
+        </h5>
+        <p class="text-muted mt-3" style="font-family: 'Roboto', sans-serif; font-size: 1.1rem; line-height: 1.8;">
+            {{ product.description }}
+        </p>
+    </div>
+
+    <!-- Product Reviews -->
+    <div class="mt-4 ms-3" >
+        <h5 style="font-family: 'Roboto', sans-serif; font-weight: 500; text-decoration: underline; text-decoration-color: #037101; text-decoration-thickness: 1px; text-underline-offset: 7px;">Customer Reviews</h5>
+        {% for review in reviews %}
+            <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            <div class="bi-star-fill text-warning"></div>
+                        {% else %}
+                            <div class="bi-star text-muted"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <h5>{{ review.customer.username }}</h5>
+                <p style="font-family: 'Roboto', sans-serif; font-size: 1.1rem; line-height: 1.8;">{{ review.comment }}</p>
+            </div>
+        {% empty %}
+            <p style="font-family: 'Roboto', sans-serif; font-size: 1.1rem; line-height: 1.8;">No reviews yet.</p>
+        {% endfor %}
+
+      
+    </div>
+
+    <!-- Related Products Section -->
+    <h4 class="mt-5 text-center">Related Products</h4>
+    <div class="row ms-1">
+    {% for product in related_products %}
+    <div class="col-6 col-lg-4 col-md-6 mb-4 mt-2 ">
+        <div class="related-products card shadow-lg bg-light rounded h-70 text-center">
+            <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
+                
+                <!-- Product Image -->
+                <div class="image-container position-relative">
+                    {% if product.product_image %}
+                        <img class="img-fluid" src="{{ product.product_image.url }}" alt="{{ item.product.title }}">
+                    {% else %}
+                        <img src="" alt="No Image Available">                 
+                    {% endif %}
+                
+                    {% if  product.is_best_selling and product.is_featured %}
+                    <div class="d-flex position-absolute top-0 start-0">
+                        <div class="discount-badge bg-danger text-white px-2 py-1 small me-1">
+                            Featured
+                        </div>
+                        <div class="discount-badge bg-success text-white px-2 py-1 small">
+                            Best Selling
+                        </div>
+                    </div>
+                    {% elif product.is_best_selling %}
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                        Best Selling
+                    </div>
+                    {% elif product.is_featured  %}
+                   
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                    Featured
+                    </div>
+                    {% endif %}
+                   
+                </div>
+
+                <!-- Product Details -->
+                <div class="p-1">
+                    <!-- Product Title -->
+                    <h6 class="mb-1" style="font-family: 'Roboto', sans-serif; font-weight: 500;">
+                        {{ product.title }}
+                    </h6>
+                    <p class="m-price text-muted" style="font-family: 'Roboto', sans-serif; font-weight: 500;">{{ product.weight|format_weight }}</p>
+
+                    <!-- Product Description -->
+                   
+
+                    <!-- Price Display -->
+                    <div class="price-section">
+                        <h4 class=" mb-0 ms-2" style="font-family: 'Roboto', sans-serif; font-weight: 400;">
+                            <i class="bi bi-currency-rupee"></i>{{ product.static_price|floatformat:2 }}
+                        </h4>
+                       
+                         
+                    
+                    </div>
+
+                    <!-- Star Rating -->
+                    <div class="rating">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= item.product.average_rating %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% else %}
+                                <i class="far fa-star text-muted"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+
+            <!-- Button Container: Add to Cart -->
+
+            <div class="">
+                <!-- Add to Cart Button -->
+                 {% if product.is_amazon  %}
+                <form method="POST" action="" class="mb-2">
+                    {% csrf_token %}
+                    <button type="submit" class="button-cart-m" role="button">Shop At Amazon</button>
+                </form>
+
+                <form method="POST" action="" class="mb-2">
+                    {% csrf_token %}
+                    <button type="submit" class="button-cart-m" role="button">Add to Wishlist</button>
+                </form>
+                {% else %}
+                <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2">
+                    {% csrf_token %}
+                    <button type="submit" class="button-cart-m w-100" role="button">Add to Wishlist</button>
+                </form>
+              <h5>Available Soon</h5>
+                
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <div class="col-12 text-center">
+        <p class="text-muted">No products found.</p>
+    </div>
+{% endfor %}
+</div>
+
+</div>
+{% endblock %}

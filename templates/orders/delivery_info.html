@@ -1,0 +1,118 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="container address-info" style="margin-top: 100px;">
+    <h2 class="form-title">Delivery Information</h2>
+    <p class="form-subtitle">Please provide your contact and delivery details.</p>
+
+    <form method="post" class="delivery-form">
+        {% csrf_token %}
+
+        <!-- Step 1: Select Saved Address or Manual Entry -->
+        <div class="section">
+            <h3 class="section-title">Step 1: Choose Your Delivery Address</h3>
+            <div class="form-group">
+                <label for="selected_address">Select Address:</label>
+                <select id="selected_address" name="selected_address" class="form-control" required>
+                    <option value="manual">Add New Address</option>
+                    {% for address in saved_addresses %}
+                        <option value="{{ address.id }}">{{ address.home }}, {{ address.street }}, {{ address.city }}, {{ address.state }}, {{ address.country }}, {{ address.pin_code }}</option>
+                    {% empty %}
+                        <option value="">No saved addresses available</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Full Name and Phone Number (Always Visible) -->
+        <div class="row">
+            <div class="form-group col-md-6">
+                {{ form.full_name.label_tag }}
+                {{ form.full_name }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
+            </div>
+        </div>
+
+        <!-- Step 2: Add Manual Address -->
+        <div id="manual-address-form" class="section" style="display:none;">
+            <h3 class="section-title">Step 2: Add New Address</h3>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    {{ form.home.label_tag }}
+                    {{ form.home }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.street.label_tag }}
+                    {{ form.street }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.city.label_tag }}
+                    {{ form.city }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.state.label_tag }}
+                    {{ form.state }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.pin_code.label_tag }}
+                    {{ form.pin_code }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.country.label_tag }}
+                    {{ form.country }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Continue to Order Summary</button>
+    </form>
+</div>
+
+<script>
+    function toggleManualAddressForm() {
+        const selectedAddress = document.getElementById('selected_address');
+        const manualForm = document.getElementById('manual-address-form');
+        const manualFields = manualForm ? manualForm.querySelectorAll('input') : [];
+        const nameField = document.querySelector('input[name="full_name"]');
+        const phoneField = document.querySelector('input[name="phone_number"]');
+
+        // Show manual address fields only when 'manual' is selected
+        if (selectedAddress && selectedAddress.value === 'manual') {
+            if (manualForm) manualForm.style.display = 'block'; // Show manual address form
+            manualFields.forEach(input => {
+                input.disabled = false;
+                input.setAttribute('required', 'true');
+            });
+        } else {
+            if (manualForm) manualForm.style.display = 'none'; // Hide manual address form
+            manualFields.forEach(input => {
+                input.disabled = true;
+                input.removeAttribute('required');
+            });
+        }
+
+        // Ensure full_name and phone_number are always enabled and required
+        if (nameField) {
+            nameField.disabled = false;
+            nameField.setAttribute('required', 'true');
+        }
+        if (phoneField) {
+            phoneField.disabled = false;
+            phoneField.setAttribute('required', 'true');
+        }
+    }
+
+    // Attach event listener
+    document.getElementById('selected_address').addEventListener('change', toggleManualAddressForm);
+
+    // Ensure the correct state is applied on page load
+    window.onload = function () {
+        toggleManualAddressForm();
+    };
+</script>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% for product in products  %}
+    <div class="col-6 col-lg-4 col-md-6 mb-4 mt-2">
+        <div class="store-item card shadow-lg bg-light rounded h-70 text-center">
+            <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
+                
+                <!-- Product Image -->
+                <div class="image-container position-relative">
+                    {% if product.product_image %}
+                        <img class="img-fluid" src="{{ product.product_image.url }}" alt="{{ item.product.title }}">
+                    {% else %}
+                        <img src="" alt="No Image Available">                 
+                    {% endif %}
+                
+                    {% if  product.is_best_selling and product.is_featured %}
+                    <div class="d-flex position-absolute top-0 start-0">
+                        <div class="discount-badge bg-danger text-white px-2 py-1 small me-1">
+                            Featured
+                        </div>
+                        <div class="discount-badge bg-success text-white px-2 py-1 small">
+                            Best Selling
+                        </div>
+                    </div>
+                    {% elif product.is_best_selling %}
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                        Best Selling
+                    </div>
+                    {% elif product.is_featured  %}
+                   
+                    <div class="discount-badge position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                    Featured
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Product Details -->
+                <div class="p-1">
+                    <!-- Product Title -->
+                    <h6 class="mb-1 " style="font-family: 'Roboto', sans-serif; font-weight: 500;">
+                        {{ product.title }}
+                    </h6>
+                    <p class="m-price text-muted" style="font-family: 'Roboto', sans-serif; font-weight: 500;">{{ product.weight|format_weight }}</p>
+
+                   
+
+                    <!-- Price Display -->
+                    <div class="price-section">
+                      
+                       
+                            <div class="d-flex justify-content-center">
+                                
+                                
+                                <p class=" mb-0" style="font-family: 'Roboto', sans-serif; font-weight: 500;">
+                                    <i class="bi bi-currency-rupee"></i>{{ product.static_price|floatformat:2 }}
+                                </p>
+                               
+                            </div>
+                      
+                    </div>
+
+                    <!-- Star Rating -->
+                    <div class="rating">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= item.product.average_rating %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% else %}
+                                <i class="far fa-star text-muted"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+
+            <!-- Button Container: Add to Cart & Buy Now -->
+             {% if product.is_amazon  %}
+            <div class="">
+                <!-- Add to Cart Button -->
+                <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2">
+                    {% csrf_token %}
+                    <button type="submit" class="button-cart-m" role="button">Add to Wishlist</button>
+                </form>
+
+                <!-- Buy Now Button -->
+                <form method="POST" action="{% url 'add_to_wishlist' product.id %}" class="mb-2">
+                    {% csrf_token %}
+                    <button type="submit" class="button-cart-m" role="button">Shop via Amazon Now</button>
+                </form>
+                <!-- You can add the Buy Now button here if required -->
+            </div>
+            {% else %}
+            <div class="">
+                <!-- Add to Cart Button -->
+                <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2">
+                    {% csrf_token %}
+                    <button type="submit" class="button-cart-m" role="button">Add To Wishlist </button>
+                </form>
+<h6 class="text-muted">Available Soon</h6>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <div class="col-12 text-center">
+        <p class="text-muted">No products found.</p>
+    </div>
+{% endfor %}

@@ -1,0 +1,170 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block content %}
+<style>/* Table Section */
+.ftco-section {
+  padding: 40px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Table Header */
+.table thead {
+  background-color: #f8f9fa;
+}
+
+.table thead th {
+  padding: 12px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #343a40;
+  text-align: left;
+}
+
+.table thead th i {
+  font-size: 14px;
+}
+
+/* Table Body */
+.table tbody tr {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.table tbody tr.alert {
+  background-color: #fdfdfe;
+  transition: background-color 0.3s ease;
+}
+
+.table tbody tr.alert:hover {
+  background-color: #f1f3f5;
+}
+
+.table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+.table td .img {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+}
+
+.table .product-table h5 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.table .product-table h6 {
+  font-size: 12px;
+  color: #6c757d;
+  line-height: 1.4;
+}
+
+/* Price */
+
+
+.table .quantity {
+  width: 120px;
+}
+
+.input-group {
+  width: 100%;
+}
+
+.input-group .form-control {
+  padding: 5px;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+/* Close Button */
+.table td button.close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #dc3545;
+  cursor: pointer;
+}
+
+.table td button.close:hover {
+  color: #c82333;
+}
+
+
+
+
+
+</style>
+
+    <h1 class="mt-1">Your Wishlist</h1>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <h3 class="mb-4 text-center">Wishlist</h3>
+                        <div class="table-wrap">
+                            <table class="table table-hover">
+                                <thead class="thead-primary">
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                       
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Weight</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for wishlist in wishlist_items %}
+                                    <tr class="alert" role="alert" onclick="location.href='{% url 'product_detail' wishlist.slug %}' " style="cursor: pointer;">
+                                        <td>
+                                            {% if wishlist.product_image %}
+                                            <img style="width: 100px; height:100px" class="img-fluid" src="{{ wishlist.product_image.url }}" alt="{{ product.title }}" />
+                                            {% else %}
+                                            <img class="img-fluid" src="{% static 'default-image.jpg' %}" alt="No Image Available">
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="product-table">
+                                                <h5>{{wishlist.title}}</h5>
+                                            </div>
+                                        </td>
+                                        <td><i class=""></i>4</td>
+                                        <td class="weight">
+                                           {{ wishlist.weight|format_weight }}
+                                        </td>
+                                        {% if wishlist.is_amazon %}
+                                        buy now
+                                        {% else %}
+                                        <td> <h6 class="text-muted">Available Soon</h6></td>
+                                        {% endif %}
+                                        <td>
+                                            <form method="post" action="{% url 'remove_from_wishlist' wishlist.slug %} ">
+                                                {% csrf_token %}
+
+                                                <button type="submit" class="close text-danger" data-dismiss="alert" aria-label="Close" onclick="event.stopPropagation();"> <span aria-hidden="true"><i class="fa fa-close"></i></span> </button>
+
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+{% endblock %}

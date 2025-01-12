@@ -1,0 +1,126 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-xxl py-5"></div>
+<div class="container mt-3">
+    <div class="section-title text-center mx-auto" style="max-width: 500px;">
+        <h1 class="display-6 fw-bold text-muted">
+           {{ category }}
+        </h1>
+    </div>
+
+    <!-- Filter and Sort Options -->
+    <div class="row mb-4">
+        <!-- Search within Category -->
+        <div class="col-md-6 mt-2">
+            <div class="input-group">
+                <input type="text" id="search-query" name="search-query" class="form-control"
+                       placeholder="Search within {{ category }}" value="{{ request.GET.search_query }}">
+            </div>
+        </div>
+
+        <!-- Sort by -->
+        <div class="col-md-6 mt-2">
+            <div class="input-group justify-content-md-end">
+                <label for="sort-by" class="input-group-text fw-bold">Sort by:</label>
+                <select id="sort-by" name="sort-by" class="form-select">
+                    <option value="default">Select Options</option>
+                    <option value="price_low_to_high" {% if request.GET.sort_by == "price_low_to_high" %}selected{% endif %}>
+                        Price: Low to High
+                    </option>
+                    <option value="price_high_to_low" {% if request.GET.sort_by == "price_high_to_low" %}selected{% endif %}>
+                        Price: High to Low
+                    </option>
+                    <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>
+                        Rating: High to Low
+                    </option>
+                    <option value="date_newest" {% if request.GET.sort_by == "date_newest" %}selected{% endif %}>
+                        Date Newest First
+                    </option>
+                    <option value="date_oldest" {% if request.GET.sort_by == "date_oldest" %}selected{% endif %}>
+                        Date Oldest First
+                    </option>
+                    <option value="name_asc" {% if request.GET.sort_by == "name_asc" %}selected{% endif %}>
+                        Name: A-Z
+                    </option>
+                    <option value="name_desc" {% if request.GET.sort_by == "name_desc" %}selected{% endif %}>
+                        Name: Z-A
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product List -->
+    <div class="row g-4" id="product-list">
+        {% if products %}
+            {% include 'partials/partial_product.html' %}
+        {% else %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No products found.</p>
+            </div>
+        {% endif %}
+        
+        <div class="pagination">
+            <span class="step-links">
+                {% if products.has_previous %}
+                    <a href="?page=1&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">First</a>
+                    <a href="?page={{ products.previous_page_number }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">Previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ products.number }} of {{ products.paginator.num_pages }}
+                </span>
+        
+                {% if products.has_next %}
+                    <a href="?page={{ products.next_page_number }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">Next</a>
+                    <a href="?page={{ products.paginator.num_pages }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">Last</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Attach event listener for input in the search query
+        $('#search-query').on('input', function () {
+            var searchQuery = $(this).val();
+            var sortBy = $('#sort-by').val();
+
+            $.ajax({
+                url: "{% url 'view-products' category_slug %}",  // Use the slug in the URL
+                data: {
+                    'search-query': searchQuery,
+                    'sort-by': sortBy
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $('#product-list').html(data.html);
+                }
+            });
+        });
+
+        // Attach event listener for sort selection
+        $('#sort-by').on('change', function () {
+            var searchQuery = $('#search-query').val();
+            var sortBy = $(this).val();
+
+            $.ajax({
+                url: "{% url 'view-products' category_slug %}",  // Use the slug in the URL
+                data: {
+                    'search-query': searchQuery,
+                    'sort-by': sortBy
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $('#product-list').html(data.html); 
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
