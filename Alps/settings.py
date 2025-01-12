@@ -24,13 +24,29 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-9d#@4%3ho7vyvcjcrq4ljf_qqczi0e4uddj4*^$lvzw&%2qj+u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 
 
-# Application definition
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+}
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -99,7 +115,7 @@ DATABASES = {
 """
 import dj_database_url
 DATABASES={
-    'default':dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default':dj_database_url.parse(env('DATABASE_URL'))
 }
 
 

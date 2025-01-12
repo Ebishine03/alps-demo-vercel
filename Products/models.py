@@ -20,7 +20,7 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
     
     def __str__(self):
-        return self.name,self.slug
+        return self.name
 
 class Product(models.Model):
     category = models.ForeignKey(
