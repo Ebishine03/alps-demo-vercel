@@ -22,4 +22,4 @@ venv/
 *.sqlite3
 
 /static/vendor/
-/media/
+
