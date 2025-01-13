@@ -37,7 +37,7 @@ def index(request):
 
     categorized_products = {}
     for category in categories:
-        products = Product.objects.filter(category=category, is_active=True)
+        products = Product.objects.filter(category=category, is_active=True).order_by('-created_at')[:3]  # Limit to latest 3 products
         product_data_list = []
 
         for product in products:

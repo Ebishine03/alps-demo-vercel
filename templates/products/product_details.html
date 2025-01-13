@@ -237,9 +237,9 @@
                     <button type="submit" class="button-cart-m" role="button">Add to Wishlist</button>
                 </form>
                 {% else %}
-                <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2">
+                <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2 p-1">
                     {% csrf_token %}
-                    <button type="submit" class="button-cart-m w-100" role="button">Add to Wishlist</button>
+                    <button type="submit" class="button-cart-m w-100 " role="button">Add to Wishlist</button>
                 </form>
               <h5>Available Soon</h5>
                 

@@ -275,7 +275,7 @@ h3 {
     margin-top: 20px;
   }
   .store-item{
-    width: 180px;
+    width: 192px;
     padding: 0;
   }
   .related-products{
@@ -318,8 +318,8 @@ h3 {
   transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
   user-select: none;
   -webkit-user-select: none;
-  width: 172px;
-  height: 30px;
+  
+  height: 40px;
   padding: 1px;
 
 }
@@ -850,13 +850,13 @@ color: #000000 ;
   z-index: 1; 
 }
 .carousel-media {
-    object-fit: cover;
-    height: 610px; /* Set desired height for all media */
+    object-fit: fill;
+    height: 610px; 
   }
 
 .carousel-caption {
   position: relative;
-  z-index: 2; /* Ensure captions are above the overlay */
+  z-index: 2; /
 }
 
 
