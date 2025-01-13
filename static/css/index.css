@@ -283,6 +283,9 @@ h3 {
     padding: 0;
 
   }
+  .carousel-media-video{
+    object-fit: cover;
+  }
   .psr-l{
     width: 409px;
   }
@@ -851,6 +854,9 @@ color: #000000 ;
 }
 .carousel-media {
     object-fit: fill;
+    height: 610px; 
+  }
+  .carousel-media-video{
     height: 610px; 
   }
 
