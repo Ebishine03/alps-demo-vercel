@@ -53,7 +53,7 @@ a {
 
 .about-section {
   padding: 60px 15px;
-  background-color: #f9f9f9;
+  background-color:aliceblue;
 }
 
 .about-heading {
@@ -249,6 +249,10 @@ a {
 .related-products{
   width: 315px;
 }
+.button-cart-m{
+  width: 100%;
+  
+}
 @media (max-width: 576px) {
   .image-container{
     height: 145px;
@@ -321,7 +325,7 @@ h3 {
   transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
   user-select: none;
   -webkit-user-select: none;
-  
+  width: 97%;
   height: 40px;
   padding: 1px;
 
@@ -803,9 +807,7 @@ color: #000000 ;
       width: 300px;
     
     }
-    .button-cart-m{
-      width: 97%;
-    }
+    
     .psr-l{
       width: 48rem;
     }
@@ -860,8 +862,10 @@ color: #000000 ;
     height: 610px; 
   }
   .carousel-media-video{
-    height: 610px; 
+    height: 610px;
+    object-fit: fill; 
   }
+
 
 .carousel-caption {
   position: relative;

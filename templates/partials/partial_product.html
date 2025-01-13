@@ -76,7 +76,7 @@
                 <!-- Add to Cart Button -->
                 <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2">
                     {% csrf_token %}
-                    <button type="submit" class="button-cart-m w-100" role="button">Add to Wishlist</button>
+                    <button type="submit" class="button-cart-m " role="button">Add to Wishlist</button>
                 </form>
 
                 <!-- Buy Now Button -->
@@ -91,7 +91,7 @@
                 <!-- Add to Cart Button -->
                 <form method="POST" action="{% url 'add_to_wishlist' product.slug %}" class="mb-2 mt-1 ">
                     {% csrf_token %}
-                    <button type="submit" class="button-cart-m w-100 " role="button">Add To Wishlist </button>
+                    <button type="submit" class="button-cart-m " role="button">Add To Wishlist </button>
                 </form>
 <h6 class="text-muted">Available Soon</h6>
             </div>
