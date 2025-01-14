@@ -259,9 +259,16 @@
         </div>
 
         <div class="text-center mt-5">
-            <a href="{% url 'view-products' category.slug %}" class="btn btn-success rounded-pill py-3 px-5">
-                View More <i class="fa fa-arrow-right ms-2"></i>
-            </a>
+          
+            <div class="view-more-container text-center mt-2">
+  <a href="{% url 'view-products' category.slug %}" class="view-more-text ">View More<i class="fa fa-arrow-right  ms-2"></i></a>
+  <div class="glowing-dashed-lines text-center">___&nbsp;</div>
+</div>
+
+            
+
+          
+
         </div>
     </div>
 </div>
