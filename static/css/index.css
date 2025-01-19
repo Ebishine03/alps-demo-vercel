@@ -90,7 +90,7 @@ a {
   font-size: 40px;
   letter-spacing: 14px;
   color: rgb(41, 237, 34);
-  animation: blink-glow 1.5s infinite alternate;
+  animation: blink-glow .6s infinite alternate;
   margin-left:39px;
 }
 .glowing-arrow {
@@ -105,14 +105,14 @@ a {
   }
 }
 @keyframes blink-glow {
-  0% {
+  /* 0% {
     color: rgb(53, 233, 53);
     text-shadow: 0 0 5px rgb(0, 255, 102), 0 0 10px rgb(0, 255, 149);
-  }
-  50% {
+  } */
+  /* 50% {
     color: #00ff59;
     text-shadow: 0 0 10px #2c9410, 0 0 15px #086722;
-  }
+  } */
   100% {
     color: rgb(0, 255, 68);
     text-shadow: 0 0 5px rgb(14, 226, 71), 0 0 10px rgb(0, 255, 60);
@@ -301,9 +301,7 @@ a {
 .product-description {
   display: block;
 }
-.store-item{
-  padding: 1rem;
-}
+
 .image-container {
   width: 100%;
   height: 200px; /* Set a fixed height for all images */
@@ -311,6 +309,7 @@ a {
 }
 .related-products{
   width: 315px;
+  margin-right: 6px;
 }
 .button-cart-m{
   width: 100%;
@@ -342,11 +341,11 @@ h3 {
     margin-top: 20px;
   }
   .store-item{
-    width: 192px;
+    width: 112%;
     padding: 0;
   }
   .related-products{
-    width: 180px;
+    width: 100%;
     padding: 0;
 
   }
@@ -709,14 +708,15 @@ color: #000000 ;
 .offcanvas-body {
   
   scrollbar-color: #aab7cf transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none
+  ;
 }
 
 /* Scrollbar Customization */
 .offcanvas-body::-webkit-scrollbar {
   width: 5px;
   height: 8px;
-  background-color: #fff;
+  
 }
 
 .offcanvas-body::-webkit-scrollbar-thumb {
@@ -726,7 +726,7 @@ color: #000000 ;
 .offcanvas-header {
   padding: 15px 20px;
   
-  background-color:aliceblue
+
 }
 
 .offcanvas-title {
@@ -738,10 +738,11 @@ color: #000000 ;
 /* Offcanvas Body */
 .offcanvas-body {
   padding: 10px 15px;
-  width: 400px;
+  /* width: 400px; */
 }
 #offcanvasMenu{
   width: 300px;
+  background-image: linear-gradient(-225deg, #4d744b00 0%, #c7eec400 48%, #84fe7e45 100%);
 }
 
 /* Main Navigation Links */
@@ -2088,4 +2089,74 @@ a .owl-carousel{
   padding: 18px;
   background: aliceblue;
   
+}
+/* Container for pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Step links container */
+.step-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Style for all pagination links */
+.step-links a {
+  text-decoration: none;
+  color: #007BFF; /* Blue color for links */
+  padding: 8px 15px;
+  background-color: #f1f1f1; /* Light background color */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for links */
+.step-links a:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+/* Style for the current page number */
+.step-links .current {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 15px;
+  background-color: #e9ecef; /* Grayish background */
+  border-radius: 4px;
+  color: #495057; /* Dark text color */
+}
+
+.step-links .first:disabled,
+.step-links .previous:disabled {
+  background-color: #f1f1f1;
+  color: #ccc;
+  cursor: not-allowed;
+  border: 1px solid #ddd;
+}
+
+.step-links .next:disabled,
+.step-links .last:disabled {
+  background-color: #f1f1f1;
+  color: #ccc;
+  cursor: not-allowed;
+  border: 1px solid #ddd;
+}
+
+
+.step-links a {
+  margin: 0 5px;
+}
+
+.pagination {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
 }

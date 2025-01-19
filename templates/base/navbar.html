@@ -156,13 +156,13 @@
     </div>
     <div class="offcanvas-body">
         <!-- Main Navigation Links -->
-        <a href="{% url 'home' %}" class="d-block mb-3  " style="color: #054811;  text-transform: uppercase;">Home</a>
+        <a href="{% url 'home' %}" class="d-block mb-3  " style="color: #054811;  text-transform: uppercase;font-family: 'Roboto', sans-serif; font-size: 1rem; line-height: 1.8;">Home</a>
     
-        <a href="about.html" class="d-block mb-3    " style="color: #054811;  text-transform: uppercase;">About</a>
+        <a href="about.html" class="d-block mb-3    " style="color: #054811;  text-transform: uppercase; font-family: 'Roboto', sans-serif; font-size: 1rem; line-height: 1.8;">About</a>
         <hr>
 
         <!-- Product Categories -->
-        <p class=" text-uppercase mb-2 ">Products</p>
+        <p class=" text-uppercase mb-2 " style="font-family: 'Roboto', sans-serif; font-size: 1rem; line-height: 1.8;">Products</p>
         <ul class="list-unstyled mb-4">
             <!-- Static links for Featured and Best Selling  -->
             <li class="mb-2">
@@ -202,11 +202,11 @@
                 <a href="{% url 'wishlist' %}" class="text-muted fw-bold">Wishlist</a>
             </li>
             <li>
-                <a href="{% url 'logout' %}" class="text-danger fw-bold">Sign Out</a>
+                <i class="bi bi-person"></i>  <a href="{% url 'logout' %}" class="text-danger fw-bold">Sign Out</a>
             </li>
         </ul>
         {% else %}
-        <a href="{% url 'login' %}" class="nav-item nav-link">
+        <a style="font-family: 'Roboto', sans-serif; font-size: 1.1rem; line-height: 1.8;" href="{% url 'login' %}" class="nav-item nav-link">
             <div class="login-t">
                 <span class="icon-t" aria-hidden="true"></span>
                 <span class="text-t">Login</span>

@@ -3,10 +3,10 @@
 {% load custom_filters %}
 
 {% block content %}
-<div class="container product-detail ">
-    <div class="row">
+<div class="container-xxl py-5 product-detail ">
+    <div class=" row g-4">
         <!-- Product Information -->
-        <div class="col-sm-6">
+        <div class="col-6 col-lg-4 col-md-6 mb-4 ">
             <div class="position-relative">
                 <!-- Product Image -->
                 {% if product.product_image %}
@@ -152,7 +152,9 @@
 
     <!-- Related Products Section -->
     <h4 class="mt-5 text-center">Related Products</h4>
+    <div class="container py-2">
     <div class="row ms-1">
+
     {% for product in related_products %}
     <div class="col-6 col-lg-4 col-md-6 mb-4 mt-2 ">
         <div class="related-products card shadow-lg bg-light rounded h-70 text-center">
@@ -253,6 +255,7 @@
         <p class="text-muted">No products found.</p>
     </div>
 {% endfor %}
+</div>
 </div>
 
 </div>

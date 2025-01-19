@@ -32,7 +32,6 @@ def group_into_chunks(iterable, chunk_size):
     return zip_longest(*args)
 
 def index(request):
-    # Fetch categories
     categories = Category.objects.all()
 
     categorized_products = {}
@@ -64,19 +63,19 @@ def index(request):
                 # For local products, fetch from DB
                 product_data.update({
                     'price': product.static_price,
-                    'weight': product.weight,  # Assuming weight is a local DB field
+                    'weight': product.weight,
                 })
 
             product_data_list.append(product_data)
 
-        categorized_products[category] = product_data_list  # Store category object as key
+        categorized_products[category] = product_data_list  
 
     featured_products = Product.objects.filter(is_featured=True, is_active=True).order_by('-updated_at')[:6]
 
     context = {
         'categorized_products': categorized_products,
         'featured_products': featured_products,
-        'categories': categories  # Pass all categories to the context
+        'categories': categories  
     }
     return render(request, 'base/home.html', context)
 
@@ -117,7 +116,7 @@ def register(request):
     return render(request, 'base/sign_in_up.html', {'form': form})
 
 def custom_logout(request):
-    logout(request)  # Log out the user
+    logout(request) 
     return redirect(reverse('home'))
 def custom_login_view(request):
     if request.method == 'POST':
@@ -128,11 +127,11 @@ def custom_login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                # Redirect based on user role
+             
                 if user.role == 'staff':
-                    return redirect('employee_dashboard')  # Redirect to employee dashboard
+                    return redirect('employee_dashboard')  
                 else:
-                    return redirect('home')  # Redirect to customer home page
+                    return redirect('home') 
             else:
                 messages.error(request, 'Invalid email or password.')
     else:
@@ -166,17 +165,15 @@ def edit_profile(request):
         user.phone_number = phone_number
         user.save()
 
-        # Success message
         messages.success(request, "Profile updated successfully.")
         return redirect("profile_view")
 
-    # Render the edit profile page
     context = {"user": request.user}
     return render(request, "profile/edit_profile.html", context)
 def search_products_home(request):
-    query = request.GET.get('q', '')  # Get the search query
+    query = request.GET.get('q', '')  
     if query:
-        products = Product.objects.filter(title__icontains=query)  # Search by product title
+        products = Product.objects.filter(title__icontains=query)  
     else:
         products = Product.objects.all()  # If no search query, return all products
 

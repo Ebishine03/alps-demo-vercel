@@ -77,8 +77,8 @@ def list_products(request, category_slug):
     elif sort_by == 'name_desc':
         products = products.order_by('-title')
     
-    # Pagination logic
-    paginator = Paginator(products, 10)  # Show 10 products per page
+    # Pagination
+    paginator = Paginator(products,10)  
     try:
         paginated_products = paginator.page(page)
     except PageNotAnInteger:
@@ -103,9 +103,9 @@ def product_detail(request,slug):
     
     product = get_object_or_404(Product, slug=slug)
     related_products = Product.objects.filter(
-        category=product.category,  # Same category
-        is_active=True  # Only active products
-    ).exclude(id=product.id)[:4]  # Limit to 4 related products
+        category=product.category, 
+        is_active=True  
+    ).exclude(id=product.id)[:4]  
 
     context = {
         'product': product,
@@ -133,7 +133,6 @@ def add_to_wishlist(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
     wishlist, created = Wishlist.objects.get_or_create(user=request.user)
     print(product,wishlist)
-    # Add the product to the wishlist
     if not wishlist.products.filter(id=product.id).exists():
         wishlist.products.add(product)
         wishlist.save()
@@ -141,13 +140,13 @@ def add_to_wishlist(request, product_slug):
     else:
         print(f"Product '{product.title}' is already in {request.user}'s wishlist.")
 
-    return redirect('wishlist')  # Redirect to wishlist view
+    return redirect('wishlist')  
         
 
 
 @login_required
 def remove_from_wishlist(request, product_slug):
-    # Get the product
+
     product = get_object_or_404(Product, slug=product_slug)
 
     # Get the wishlist item for the user
@@ -156,4 +155,4 @@ def remove_from_wishlist(request, product_slug):
     if wishlist_item and product in wishlist_item.products.all():
         wishlist_item.products.remove(product)  
 
-    return redirect('wishlist')  # Redirect back to the wishlist page
+    return redirect('wishlist') 

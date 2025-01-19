@@ -65,20 +65,21 @@
         <div class="pagination">
             <span class="step-links">
                 {% if products.has_previous %}
-                    <a href="?page=1&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">First</a>
-                    <a href="?page={{ products.previous_page_number }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">Previous</a>
+                    <a href="?page=1&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}" class="first">First</a>
+                    <a href="?page={{ products.previous_page_number }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}" class="previous">Previous</a>
                 {% endif %}
-        
+                
                 <span class="current">
                     Page {{ products.number }} of {{ products.paginator.num_pages }}
                 </span>
-        
+                
                 {% if products.has_next %}
-                    <a href="?page={{ products.next_page_number }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">Next</a>
-                    <a href="?page={{ products.paginator.num_pages }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}">Last</a>
+                    <a href="?page={{ products.next_page_number }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}" class="next">Next</a>
+                    <a href="?page={{ products.paginator.num_pages }}&sort-by={{ request.GET.sort_by }}&search-query={{ request.GET.search_query|default:'' }}" class="last">Last</a>
                 {% endif %}
             </span>
         </div>
+        
     </div>
 </div>
 
