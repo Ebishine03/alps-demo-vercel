@@ -8,7 +8,7 @@ env/
 venv/
 
 # Environment variable files
-.env
+
 
 # IDE files
 .idea/
@@ -19,7 +19,7 @@ venv/
 *.log
 
 # Database files
-*.sqlite3
+
 
 /static/vendor/
 
